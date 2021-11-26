@@ -5,31 +5,33 @@ from matplotlib.pyplot import winter
 from indefinida import AppIndefinida
 from definida import AppDefinida
 
-Window=tkinter.Tk()
+class Principal(Frame):
+    def __init__(self, root=  None):
+        super().__init__(root,width=500,height=400)
+        self.root=root
+        self.pack()
+        self.createWidget()
+    def Close1(self):
+        root=Tk()
+        AppIndefinida(root)
+        root.mainloop()
+        
+    def Close2(self):
+        root=Tk()
+        AppDefinida(root)
+        root.mainloop()
+    def createWidget(self):
+        Label(self,text="Integrar").place(x=250,y=45)
+        self.B7=tkinter.Button(self,text="Indefinida",padx=50,pady=20,command=self.Close1)
+        self.B7.place(x=70,y=120)
+        self.B7=tkinter.Button(self,text="Definida",padx=50,pady=20,command=self.Close2)
+        self.B7.place(x=300,y=120)
+        
 
-Window.geometry("500x400")
-Label(Window,text="Integrar").place(x=250,y=45)
+root=Tk()
+app=Principal(root)
+app.mainloop()
 
-
-def Close1():
-    Window.destroy()
-    root=Tk()
-    AppIndefinida(root)
-    root.mainloop()
-    
-def Close2():
-    Window.destroy()
-    root=Tk()
-    AppDefinida(root)
-    root.mainloop()
-
-B7=tkinter.Button(Window,text="Indefinida",padx=50,pady=20,command=Close1)
-B7.place(x=70,y=120)
-B7=tkinter.Button(Window,text="Definida",padx=50,pady=20,command=Close2)
-B7.place(x=300,y=120)
-
-
-Window.mainloop()
 
 
 
