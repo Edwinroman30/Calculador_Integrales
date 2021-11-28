@@ -1,7 +1,7 @@
 from os import close
 from tkinter import *
 import tkinter
-from matplotlib.pyplot import winter
+#from matplotlib.pyplot import winter
 from indefinida import AppIndefinida
 from definida import AppDefinida
 
