@@ -1,3 +1,5 @@
+import math
+from os import strerror
 from tkinter import *
 from tkinter.font import BOLD
 from tkinter import messagebox as MessageBox
@@ -8,7 +10,6 @@ from sympy import integrate
 from sympy import sqrt
 from sympy import symbols
 from sympy import init_printing
-from sympy import simplify
 
 
 x = symbols("x")
@@ -45,9 +46,10 @@ class LongArco(Frame):
 
    
     def LengthOfGraph(self,funcionFX,infLim,supLim):
-        
-        if(self.boxValidation()):
-        
+       
+       try:
+           if(self.boxValidation()):
+            
             resultList = []
             
             #Derivada de la funcion:
@@ -57,18 +59,29 @@ class LongArco(Frame):
             funIntegral = sqrt(1 + (diferenciaFX)**2)
             
             #Aplicando la formula de longitud de arco (Integral):
-            longArco = integrate(funIntegral,(x,infLim,supLim))
+            longArcoExpre = integrate(funIntegral,x)
+    
             
-            #(FunOriginal,DifFunOriginal,FunAIntegral,LimInferior,LimSuperior,LongArco)
+            inf = longArcoExpre.subs(x,infLim)
+            sup = longArcoExpre.subs(x,supLim)
+                        
+            longArcoNeta = sup-inf
+            
+            #(FunOriginal,DifFunOriginal,FunAIntegral,LimInferior,LimSuperior,ExpresionLongArco,calculoNeto)
             resultList.append(funcionFX)
             resultList.append(diferenciaFX)
             resultList.append(funIntegral)
             resultList.append((infLim,supLim))
-            resultList.append(longArco)
+            resultList.append(longArcoExpre)
+            resultList.append(longArcoNeta.evalf())
             
-            print(simplify(resultList[-1]))
-            self.tboxResult.insert(END, simplify(resultList[-1]))
-            plot(resultList[-1])
+            #print((sup-inf).evalf()) -> Para Debugear
+            #print(resultList[-1]) -> Para Debugear
+            
+            self.tboxResult.insert(END, resultList[-1])
+       except:
+            MessageBox.showinfo(title="Información Importante:",message="Es posible que no halla escrito la función con la regla correspondiente. Por favor verifique la función 😃") 
+
 
 
     def boxValidation(self):
@@ -79,9 +92,9 @@ class LongArco(Frame):
             
             result = MessageBox.askquestion(title="Límites Vacios", message="Por favor asegúrese de que todos los campos estén rellenos. \n Si no especifica, los limites por defecto estos serán [-1 , 1]. ¿Está de acuerdo con esta selección?")
 
-            if(result == YES):
-                self.tboxinferirorLim.insert(END,"-1")
-                self.tboxsuperiorLim.insert(END,"1")
+            if(result == MessageBox.YES):
+                self.tboxinferirorLim.insert(END,"1")
+                self.tboxsuperiorLim.insert(END,"-1")
                 isValid = True
             else:
                 isValid = False
