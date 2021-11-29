@@ -2,7 +2,6 @@ from tkinter import *
 from tkinter.font import BOLD
 from tkinter import messagebox as MessageBox
 
-#from sympy import *
 from sympy import diff
 from sympy import plot
 from sympy import integrate
@@ -25,11 +24,19 @@ class LongArco(Frame):
     
     #Funcion para insertar caracteres.    
     def setFuction(self,caracter):
-        self.tboxReciveFunction.insert(END,caracter)
-    
+        if(self.tboxReciveFunction.focus_get()==self.tboxReciveFunction):
+            self.tboxReciveFunction.insert(END,caracter)
+        elif(self.tboxinferirorLim.focus_get()==self.tboxinferirorLim):
+            self.tboxinferirorLim.insert(END,caracter)
+        elif(self.tboxsuperiorLim.focus_get()==self.tboxsuperiorLim):
+            self.tboxsuperiorLim.insert(END,caracter)
+        
     def clearTextInputAll(self):
         self.tboxReciveFunction.delete(0,END)   
-    
+        self.tboxinferirorLim.delete(0,END)
+        self.tboxsuperiorLim.delete(0,END)
+        self.tboxResult.delete(0,END)
+        
     def clearTextInputOne(self):
         contador=self.tboxReciveFunction.get()
         contador=len(contador)
@@ -50,7 +57,7 @@ class LongArco(Frame):
             funIntegral = sqrt(1 + (diferenciaFX)**2)
             
             #Aplicando la formula de longitud de arco (Integral):
-            longArco = integrate(funIntegral,(x,supLim,infLim))
+            longArco = integrate(funIntegral,(x,infLim,supLim))
             
             #(FunOriginal,DifFunOriginal,FunAIntegral,LimInferior,LimSuperior,LongArco)
             resultList.append(funcionFX)
