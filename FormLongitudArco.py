@@ -11,7 +11,7 @@ init_printing(use_unicode=True)
 class LongArco(Frame):
     
     def __init__(self, root=  None):
-        super().__init__(root,width=650,height=500)
+        super().__init__(root,width=650,height=500,background="#F3F4ED")
         root.title("Calculador de longitud de arco (Aplicación de Integral)") 
         self.pack()
         self.createWidget()
@@ -77,17 +77,16 @@ class LongArco(Frame):
 
 
     def GraphFunction(self):
-        funcionFX = self.tboxReciveFunction.get()
-        imagGrap = plotting.plot(funcionFX,(x,self.tboxinferirorLim.get(),self.tboxsuperiorLim.get()),show=False,title="Gráfica de f(x):")
-        backend = imagGrap.backend(imagGrap)
         
-        backend.process_series()
-        #backend.fig.savefig('.\Graph01.png', dpi=300) -> En caso  de querer almacenar la grafica
-        backend.show()
-        
-        
-        
-
+        if(self.boxValidation()):
+            funcionFX = self.tboxReciveFunction.get()
+            imagGrap = plotting.plot(funcionFX,(x,self.tboxinferirorLim.get(),self.tboxsuperiorLim.get()),show=False,title="Gráfica de f(x):")
+            backend = imagGrap.backend(imagGrap)
+            
+            backend.process_series()
+            #backend.fig.savefig('.\Graph01.png', dpi=300) -> En caso  de querer almacenar la grafica
+            backend.show() 
+               
     def boxValidation(self):
         
         isValid = True
@@ -113,83 +112,83 @@ class LongArco(Frame):
 
     def createWidget(self):
         
-        self.bo7=Button(self,text="*",padx=19,pady=10,command=lambda:self.setFuction("*"))
+        self.bo7=Button(self,text="*",padx=19,pady=10, relief="solid", background = "#e8cae2", command=lambda:self.setFuction("*"))
         self.bo7.place(x=120,y=145)
-        self.bo7=Button(self,text="÷",padx=19,pady=10,command=lambda:self.setFuction("/"))
+        self.bo7=Button(self,text="÷",padx=19,pady=10, relief="solid", background = "#e8cae2", command=lambda:self.setFuction("/"))
         self.bo7.place(x=180,y=145)
-        self.bo7=Button(self,text="+",padx=19,pady=10,command=lambda:self.setFuction("+"))
+        self.bo7=Button(self,text="+",padx=19,pady=10, relief="solid", background = "#e8cae2", command=lambda:self.setFuction("+"))
         self.bo7.place(x=240,y=145)
-        self.bo7=Button(self,text="-",padx=19,pady=10,command=lambda:self.setFuction("-"))
+        self.bo7=Button(self,text="-",padx=19,pady=10, relief="solid", background = "#e8cae2", command=lambda:self.setFuction("-"))
         self.bo7.place(x=300,y=145)
-        self.bo7=Button(self,text="1",padx=19,pady=10,command=lambda:self.setFuction("1"))
+        self.bo7=Button(self,text="1",padx=19,pady=10, fg="#F7F7F7", relief="solid",background = "gray", command=lambda:self.setFuction("1"))
         self.bo7.place(x=120,y=195)
-        self.bo7=Button(self,text="2",padx=19,pady=10,command=lambda:self.setFuction("2"))
+        self.bo7=Button(self,text="2",padx=19,pady=10, fg="#F7F7F7", relief="solid",background = "gray",  command=lambda:self.setFuction("2"))
         self.bo7.place(x=180,y=195)
-        self.bo7=Button(self,text="3",padx=19,pady=10,command=lambda:self.setFuction("3"))
+        self.bo7=Button(self,text="3",padx=19,pady=10, fg="#F7F7F7", relief="solid",background = "gray",  command=lambda:self.setFuction("3"))
         self.bo7.place(x=240,y=195)
-        self.bo8=Button(self,text="Log",padx=12,pady=10,command=lambda:self.setFuction("log()"))
+        self.bo8=Button(self,text="Log",padx=12,pady=10,  relief="solid",background ="#FFC286", command=lambda:self.setFuction("log()"))
         self.bo8.place(x=300,y=195)
-        self.bo8=Button(self,text="sin",padx=12,pady=10,command=lambda:self.setFuction("sin()"))
+        self.bo8=Button(self,text="sin",padx=12,pady=10,  relief="solid",background ="#abd3e3", command=lambda:self.setFuction("sin()"))
         self.bo8.place(x=360,y=195)
-        self.bo8=Button(self,text="cos",padx=12,pady=10,command=lambda:self.setFuction("cos()"))
+        self.bo8=Button(self,text="cos",padx=12,pady=10,  relief="solid",background ="#abd3e3", command=lambda:self.setFuction("cos()"))
         self.bo8.place(x=420,y=195)
-        self.bo8=Button(self,text="tan",padx=12,pady=10,command=lambda:self.setFuction("tan()"))
+        self.bo8=Button(self,text="tan",padx=12,pady=10,  relief="solid",background ="#abd3e3", command=lambda:self.setFuction("tan()"))
         self.bo8.place(x=480,y=195)
-        self.bo8=Button(self,text="4",padx=19,pady=10,command=lambda:self.setFuction("4"))
+        self.bo8=Button(self,text="4",padx=19,pady=10, fg="#F7F7F7", relief="solid",background = "gray", command=lambda:self.setFuction("4"))
         self.bo8.place(x=120,y=245)
-        self.bo8=Button(self,text="5",padx=19,pady=10,command=lambda:self.setFuction("5"))
+        self.bo8=Button(self,text="5",padx=19,pady=10, fg="#F7F7F7", relief="solid",background = "gray",  command=lambda:self.setFuction("5"))
         self.bo8.place(x=180,y=245)
-        self.bo8=Button(self,text="6",padx=19,pady=10,command=lambda:self.setFuction("6"))
+        self.bo8=Button(self,text="6",padx=19,pady=10, fg="#F7F7F7", relief="solid",background = "gray", command=lambda:self.setFuction("6"))
         self.bo8.place(x=240,y=245)
-        self.bo8=Button(self,text="ln",padx=17,pady=10,command=lambda:self.setFuction("ln()"))
+        self.bo8=Button(self,text="ln",padx=17,pady=10, relief="solid",background ="#FFC286", command=lambda:self.setFuction("ln()"))
         self.bo8.place(x=300,y=245)
-        self.bo8=Button(self,text="csc",padx=12,pady=10,command=lambda:self.setFuction("csc()"))
+        self.bo8=Button(self,text="csc",padx=12,pady=10, fg="#F7F7F7", relief="solid",background ="#66806A", command=lambda:self.setFuction("csc()"))
         self.bo8.place(x=360,y=245)
-        self.bo8=Button(self,text="sec",padx=12,pady=10,command=lambda:self.setFuction("sec()"))
+        self.bo8=Button(self,text="sec",padx=12,pady=10, fg="#F7F7F7",  relief="solid",background ="#66806A", command=lambda:self.setFuction("sec()"))
         self.bo8.place(x=420,y=245)
-        self.bo8=Button(self,text="cot",padx=12,pady=10,command=lambda:self.setFuction("cot()"))
+        self.bo8=Button(self,text="cot",padx=12,pady=10, fg="#F7F7F7",  relief="solid",background ="#66806A",  command=lambda:self.setFuction("cot()"))
         self.bo8.place(x=480,y=245)
-        self.bo7=Button(self,text="7",padx=19,pady=10,command=lambda:self.setFuction("7"))
+        self.bo7=Button(self,text="7",padx=19,pady=10, fg="#F7F7F7", relief="solid",background = "gray", command=lambda:self.setFuction("7"))
         self.bo7.place(x=120,y=295)
-        self.bo7=Button(self,text="8",padx=19,pady=10,command=lambda:self.setFuction("8"))
+        self.bo7=Button(self,text="8",padx=19,pady=10, fg="#F7F7F7", relief="solid",background = "gray", command=lambda:self.setFuction("8"))
         self.bo7.place(x=180,y=295)
-        self.bo7=Button(self,text="9",padx=19,pady=10,command=lambda:self.setFuction("9"))
+        self.bo7=Button(self,text="9",padx=19,pady=10, fg="#F7F7F7", relief="solid",background = "gray", command=lambda:self.setFuction("9"))
         self.bo7.place(x=240,y=295)
-        self.bo7=Button(self,text="x^",padx=15,pady=10,command=lambda:self.setFuction("**"))
+        self.bo7=Button(self,text="x^",padx=15,pady=10, relief="solid", background = "#e8cae2", command=lambda:self.setFuction("**"))
         self.bo7.place(x=300,y=295)
         
-        self.bo7=Button(self,text="Gráficar",padx=30,pady=35,command=self.GraphFunction)
+        self.bo7=Button(self,text="Gráficar",padx=30,pady=35, fg="#F7F7F7", relief="solid",background = "gray", command=self.GraphFunction)
         self.bo7.place(x=360,y=295)
         
-        Button(self,text="X",padx=19,pady=35,font=("verdana",8,BOLD),command=lambda:self.setFuction("x")).place(x=479,y=295)
+        Button(self,text="X",padx=19,pady=35,font=("verdana",8,BOLD), relief="solid", background = "#B4C6A6", command=lambda:self.setFuction("x")).place(x=479,y=295)
         
-        self.bo7=Button(self,text="0",padx=19,pady=10,command=lambda:self.setFuction("0"))
+        self.bo7=Button(self,text="0",padx=19,pady=10, fg="#F7F7F7", relief="solid",background = "gray", command=lambda:self.setFuction("0"))
         self.bo7.place(x=120,y=345)
-        self.bo7=Button(self,text=".",padx=21,pady=10,command=lambda:self.setFuction("."))
+        self.bo7=Button(self,text=".",padx=21,pady=10, fg="#F7F7F7", relief="solid",background = "gray", command=lambda:self.setFuction("."))
         self.bo7.place(x=180,y=345)
         
-        self.bo7=Button(self,text="π",padx=19,pady=10,command=lambda:self.setFuction("pi"))
+        self.bo7=Button(self,text="π",padx=19,pady=10,  fg="#F7F7F7", relief="solid",background = "gray", command=lambda:self.setFuction("pi"))
         self.bo7.place(x=240,y=345)
         
-        self.bo7=Button(self,text="e",padx=19,pady=10,command=lambda:self.setFuction("e"))
+        self.bo7=Button(self,text="e",padx=19,pady=10,  fg="#F7F7F7", relief="solid",background = "gray", command=lambda:self.setFuction("e"))
         self.bo7.place(x=240,y=395)
         
-        self.bo7=Button(self,text="√",padx=18,pady=10,command=lambda:self.setFuction("sqrt()"))
+        self.bo7=Button(self,text="√",padx=18,pady=10, relief="solid", background = "#e8cae2", command=lambda:self.setFuction("sqrt()"))
         self.bo7.place(x=300,y=345)
         
-        self.bo7=Button(self,text="(",padx=19,pady=10,command=lambda:self.setFuction("("))
+        self.bo7=Button(self,text="(",padx=19,pady=10,  fg="#F7F7F7", relief="solid",background = "gray", command=lambda:self.setFuction("("))
         self.bo7.place(x=120,y=395)
-        self.bo7=Button(self,text=")",padx=19,pady=10,command=lambda:self.setFuction(")"))
+        self.bo7=Button(self,text=")",padx=19,pady=10,  fg="#F7F7F7", relief="solid",background = "gray", command=lambda:self.setFuction(")"))
         self.bo7.place(x=180,y=395)
         
      
         
 
         
-        self.bo7=Button(self,text="AC",padx=14,pady=10,command=self.clearTextInputAll)
-        self.bo7.place(x=300,y=395) #PI POSITION x=240,y=395 e
+        self.bo7=Button(self,text="AC",padx=14,pady=10,  relief="solid",background = "#FFF1AF", command=self.clearTextInputAll)
+        self.bo7.place(x=300,y=395) 
         
-        self.bo7=Button(self,text="DEL",padx=19,pady=10,command=self.clearTextInputOne)
+        self.bo7=Button(self,text="DEL",padx=19,pady=10, relief="solid",background = "#FFF1AF", command=self.clearTextInputOne)
         self.bo7.place(x=360,y=395)
     
         
@@ -200,6 +199,7 @@ class LongArco(Frame):
         Label(self,text="Resultado:",font=("verdana",8,BOLD)).place(x=120,y=75)
         Label(self,text="Fun. Trigonométricas:",font=("verdana",9,BOLD)).place(x=376,y=158)
         
+        Label(self,text="Worked by: Edwin A. Roman").place(x=10,y=470)
         
         
         #?ReciveFunction
@@ -222,7 +222,7 @@ class LongArco(Frame):
         
         #/////////////////////////////////////////////////////////////////////////////////////
         
-        self.bo7=Button(self,text="¡Integrar!",padx=23,pady=10,command= lambda: self.LengthOfGraph(self.tboxReciveFunction.get(),self.tboxsuperiorLim.get(),self.tboxinferirorLim.get()))
+        self.bo7=Button(self,text="¡Integrar!",padx=23,pady=10, relief="solid",background = "#FFF1AF", command= lambda: self.LengthOfGraph(self.tboxReciveFunction.get(),self.tboxsuperiorLim.get(),self.tboxinferirorLim.get()))
         self.bo7.place(x=435,y=395)     
     
 
