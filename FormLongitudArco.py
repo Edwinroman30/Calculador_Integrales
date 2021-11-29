@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter.font import BOLD
+from tkinter import messagebox as MessageBox
 
 #from sympy import *
 from sympy import diff
@@ -8,7 +9,8 @@ from sympy import integrate
 from sympy import sqrt
 from sympy import symbols
 from sympy import init_printing
-from sympy import solve
+from sympy import simplify
+
 
 x = symbols("x")
 init_printing(use_unicode=True)
@@ -16,10 +18,12 @@ init_printing(use_unicode=True)
 class LongArco(Frame):
     
     def __init__(self, root=  None):
-        super().__init__(root,width=1000,height=500)
+        super().__init__(root,width=650,height=500)
+        root.title("Calculador de longitud de arco (Aplicación de Integral)") 
         self.pack()
         self.createWidget()
-        
+    
+    #Funcion para insertar caracteres.    
     def setFuction(self,caracter):
         self.tboxReciveFunction.insert(END,caracter)
     
@@ -35,33 +39,57 @@ class LongArco(Frame):
    
     def LengthOfGraph(self,funcionFX,infLim,supLim):
         
-        resultList = []
+        if(self.boxValidation()):
         
-        #Derivada de la funcion:
-        diferenciaFX = diff(funcionFX, x)
-        
-        #Funcion de la longitud de arco:
-        funIntegral = sqrt(1 + (diferenciaFX)**2)
-        
-        #Aplicando la formula de longitud de arco (Integral):
-        longArco = integrate(funIntegral,(x,supLim,infLim))
-        
-        #(FunOriginal,DifFunOriginal,FunAIntegral,LimInferior,LimSuperior,LongArco)
-        resultList.append(funcionFX)
-        resultList.append(diferenciaFX)
-        resultList.append(funIntegral)
-        resultList.append((infLim,supLim,))
-        resultList.append(longArco)
-        
-        print(resultList[-1])
-        self.tboxResult.insert(END, resultList[-1])
-        plot(resultList[-1])
+            resultList = []
+            
+            #Derivada de la funcion:
+            diferenciaFX = diff(funcionFX, x)
+            
+            #Funcion de la longitud de arco:
+            funIntegral = sqrt(1 + (diferenciaFX)**2)
+            
+            #Aplicando la formula de longitud de arco (Integral):
+            longArco = integrate(funIntegral,(x,supLim,infLim))
+            
+            #(FunOriginal,DifFunOriginal,FunAIntegral,LimInferior,LimSuperior,LongArco)
+            resultList.append(funcionFX)
+            resultList.append(diferenciaFX)
+            resultList.append(funIntegral)
+            resultList.append((infLim,supLim))
+            resultList.append(longArco)
+            
+            print(simplify(resultList[-1]))
+            self.tboxResult.insert(END, simplify(resultList[-1]))
+            plot(resultList[-1])
 
 
-    
+    def boxValidation(self):
+        
+        isValid = True
+        
+        if(self.tboxinferirorLim.get() == "" or self.tboxsuperiorLim.get() == ""):
+            
+            result = MessageBox.askquestion(title="Límites Vacios", message="Por favor asegúrese de que todos los campos estén rellenos. \n Si no especifica, los limites por defecto estos serán [-1 , 1]. ¿Está de acuerdo con esta selección?")
+
+            if(result == YES):
+                self.tboxinferirorLim.insert(END,"-1")
+                self.tboxsuperiorLim.insert(END,"1")
+                isValid = True
+            else:
+                isValid = False
+                MessageBox.showinfo(title="Información importante", message="OK, recuerde especificar los límites de integración :)")
+            
+            if(self.tboxReciveFunction.get() == ""):
+                MessageBox.showerror(title="Error", message="Upss... lo sentimos, para poder integrar debe de indicar una función.")
+                isValid = False
+
+        return isValid
+
+
     def createWidget(self):
         
-        self.bo7=Button(self,text="x",padx=19,pady=10,command=lambda:self.setFuction("*"))
+        self.bo7=Button(self,text="*",padx=19,pady=10,command=lambda:self.setFuction("*"))
         self.bo7.place(x=120,y=145)
         self.bo7=Button(self,text="÷",padx=19,pady=10,command=lambda:self.setFuction("/"))
         self.bo7.place(x=180,y=145)
@@ -103,18 +131,25 @@ class LongArco(Frame):
         self.bo7.place(x=180,y=295)
         self.bo7=Button(self,text="9",padx=19,pady=10,command=lambda:self.setFuction("9"))
         self.bo7.place(x=240,y=295)
-        self.bo7=Button(self,text="x^",padx=15,pady=10,command=lambda:self.setFuction("x**"))
+        self.bo7=Button(self,text="x^",padx=15,pady=10,command=lambda:self.setFuction("**"))
         self.bo7.place(x=300,y=295)
         
-        self.bo7=Button(self,text="Gráficar",padx=60,pady=35,)
+        self.bo7=Button(self,text="Gráficar",padx=30,pady=35)
         self.bo7.place(x=360,y=295)
+        
+        Button(self,text="X",padx=19,pady=35,font=("verdana",8,BOLD),command=lambda:self.setFuction("x")).place(x=479,y=295)
         
         self.bo7=Button(self,text="0",padx=19,pady=10,command=lambda:self.setFuction("0"))
         self.bo7.place(x=120,y=345)
         self.bo7=Button(self,text=".",padx=21,pady=10,command=lambda:self.setFuction("."))
         self.bo7.place(x=180,y=345)
-        self.bo7=Button(self,text="AC",padx=14,pady=10,command=self.clearTextInputAll)
+        
+        self.bo7=Button(self,text="π",padx=19,pady=10,command=lambda:self.setFuction("pi"))
         self.bo7.place(x=240,y=345)
+        
+        self.bo7=Button(self,text="e",padx=19,pady=10,command=lambda:self.setFuction("e"))
+        self.bo7.place(x=240,y=395)
+        
         self.bo7=Button(self,text="√",padx=18,pady=10,command=lambda:self.setFuction("sqrt()"))
         self.bo7.place(x=300,y=345)
         
@@ -122,22 +157,31 @@ class LongArco(Frame):
         self.bo7.place(x=120,y=395)
         self.bo7=Button(self,text=")",padx=19,pady=10,command=lambda:self.setFuction(")"))
         self.bo7.place(x=180,y=395)
-        self.bo7=Button(self,text="π",padx=19,pady=10,command=lambda:self.setFuction("pi"))
-        self.bo7.place(x=240,y=395)
-        self.bo7=Button(self,text="e",padx=19,pady=10,command=lambda:self.setFuction("e"))
-        self.bo7.place(x=300,y=395)
+        
+     
+        
+
+        
+        self.bo7=Button(self,text="AC",padx=14,pady=10,command=self.clearTextInputAll)
+        self.bo7.place(x=300,y=395) #PI POSITION x=240,y=395 e
+        
         self.bo7=Button(self,text="DEL",padx=19,pady=10,command=self.clearTextInputOne)
         self.bo7.place(x=360,y=395)
     
         
         
-        Label(self,text="Función").place(x=120,y=10)
-        Label(self,text="Resultado").place(x=120,y=75)
-        Label(self,text="Fun. Trigonométricas",font=("verdana",9,BOLD)).place(x=376,y=158)
+        Label(self,text="Función para integrar:",font=("verdana",8,BOLD)).place(x=120,y=10)
+        Label(self,text="Límite\nInferior:",font=("verdana",8,BOLD)).place(x=350,y=10)
+        Label(self,text="Límite\nSuperior:",font=("verdana",8,BOLD)).place(x=450,y=10)
+        Label(self,text="Resultado:",font=("verdana",8,BOLD)).place(x=120,y=75)
+        Label(self,text="Fun. Trigonométricas:",font=("verdana",9,BOLD)).place(x=376,y=158)
+        
+        
         
         #?ReciveFunction
         self.tboxReciveFunction=Entry(self,font="Arial 13")
         self.tboxReciveFunction.place(x=120,y=40,width=200,height=30)
+        self.tboxReciveFunction.focus()
         #?
         
         #!Limites
