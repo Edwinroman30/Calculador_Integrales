@@ -31,7 +31,7 @@ class Principal(Frame):
         root.mainloop()
         
     def createWidget(self):
-        Label(self,text="Integrar").place(x=250,y=45)
+        Label(self,text="Elija opción que desea llevar a cabo:").place(x=300,y=45)
         
         self.B7=tkinter.Button(self,text="Indefinida",padx=50,pady=20,command=self.Close1)
         self.B7.place(x=70,y=120)
