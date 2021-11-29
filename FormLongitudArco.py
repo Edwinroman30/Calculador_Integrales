@@ -1,15 +1,8 @@
-import math
-from os import strerror
 from tkinter import *
 from tkinter.font import BOLD
 from tkinter import messagebox as MessageBox
-
-from sympy import diff
-from sympy import plot
-from sympy import integrate
-from sympy import sqrt
-from sympy import symbols
-from sympy import init_printing
+from sympy import diff,integrate,sqrt,symbols,init_printing,plotting
+import matplotlib.pyplot as plt
 
 
 x = symbols("x")
@@ -83,6 +76,17 @@ class LongArco(Frame):
             MessageBox.showinfo(title="Información Importante:",message="Es posible que no halla escrito la función con la regla correspondiente. Por favor verifique la función 😃") 
 
 
+    def GraphFunction(self):
+        funcionFX = self.tboxReciveFunction.get()
+        imagGrap = plotting.plot(funcionFX,(x,self.tboxinferirorLim.get(),self.tboxsuperiorLim.get()),show=False,title="Gráfica de f(x):")
+        backend = imagGrap.backend(imagGrap)
+        
+        backend.process_series()
+        #backend.fig.savefig('.\Graph01.png', dpi=300) -> En caso  de querer almacenar la grafica
+        backend.show()
+        
+        
+        
 
     def boxValidation(self):
         
@@ -154,7 +158,7 @@ class LongArco(Frame):
         self.bo7=Button(self,text="x^",padx=15,pady=10,command=lambda:self.setFuction("**"))
         self.bo7.place(x=300,y=295)
         
-        self.bo7=Button(self,text="Gráficar",padx=30,pady=35)
+        self.bo7=Button(self,text="Gráficar",padx=30,pady=35,command=self.GraphFunction)
         self.bo7.place(x=360,y=295)
         
         Button(self,text="X",padx=19,pady=35,font=("verdana",8,BOLD),command=lambda:self.setFuction("x")).place(x=479,y=295)
