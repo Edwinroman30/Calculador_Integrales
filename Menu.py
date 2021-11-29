@@ -10,7 +10,7 @@ class Principal(Frame):
     
     def __init__(self, root=  None):
         
-        super().__init__(root,width=780,height=400)
+        super().__init__(root,width=780,height=300)
         self.root=root
         self.pack()
         self.createWidget()
@@ -25,7 +25,7 @@ class Principal(Frame):
         AppDefinida(root)
         root.mainloop()
         
-    def Close3():
+    def Close3(self):
         root=Tk()
         LongArco(root)
         root.mainloop()
@@ -39,7 +39,7 @@ class Principal(Frame):
         self.B7=tkinter.Button(self,text="Definida",padx=50,pady=20,command=self.Close2)
         self.B7.place(x=300,y=120)
         
-        B7=tkinter.Button(self,text="Longitud de Arco",padx=50,pady=20,command=Close3)
+        B7=tkinter.Button(self,text="Longitud de Arco",padx=50,pady=20,command=self.Close3)
         B7.place(x=500,y=120)
     
 
